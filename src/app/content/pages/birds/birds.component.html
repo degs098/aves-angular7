@@ -1,0 +1,49 @@
+<div class="birdsListContainer">
+
+  <h1 class="center-align">Base de Datos de Aves</h1>
+
+  <mat-card>
+    <mat-grid-list cols="3" rowHeight="3:1">
+      <mat-grid-tile>
+        <div class="input-field">
+          <mat-form-field>
+            <input matInput placeholder="Nombre común o cientifico" [(ngModel)]="filterBird.nombre">
+          </mat-form-field>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="input-field">
+          <mat-form-field>
+            <mat-select placeholder="Zona" [(ngModel)]="filterBird.zona">
+              <mat-option *ngFor="let zone of zones$ | async as zones" [value]="zone.codigo">{{zone.nombre}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="input-field">
+          <button mat-stroked-button color="primary" (click)="searchFilterBird()">
+            <mat-icon>search</mat-icon>Filtrar
+          </button>
+        </div>
+        <div class="input-field">
+          <button mat-stroked-button color="primary" (click)="clearFilterBird()">
+            <mat-icon>delete</mat-icon>Limpiar Filtro
+          </button>
+        </div>        
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card>
+  <br><br>
+
+  <div class="input-field">
+    <button mat-flat-button color="primary" (click)="addBirdModal()">
+      <mat-icon>add</mat-icon>Agregar
+    </button>
+  </div>
+  <br>
+  <mat-divider></mat-divider>
+  <br>
+  
+  <app-birds-list [birds$]="birds$" (deleteBirdEvent)="deleteBird($event)" (editBirdEvent)="editBird($event)"></app-birds-list>  
+</div>

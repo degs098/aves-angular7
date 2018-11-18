@@ -1,0 +1,60 @@
+<div class="mat-elevation-z8">
+  <table mat-table class="full-width-table" [dataSource]="dataSource" matSort aria-label="Elements">
+    <!-- Codigo Columna -->
+    <ng-container matColumnDef="codigo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Código</th>
+      <td mat-cell *matCellDef="let bird">{{bird.codigo}}</td>
+    </ng-container>
+
+    <!-- Nombre comun Columna -->
+    <ng-container matColumnDef="nombreComun">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre común</th>
+      <td mat-cell *matCellDef="let bird">{{bird.nombreComun}}</td>
+    </ng-container>
+
+    <!-- Nombre cientifico Columna -->
+    <ng-container matColumnDef="nombreCientifico">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre cientifico</th>
+      <td mat-cell *matCellDef="let bird">{{bird.nombreCientifico}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="paises">
+      <th mat-header-cell *matHeaderCellDef>Paises</th>
+      <td mat-cell *matCellDef="let bird">
+        <div class="margin-5" *ngFor="let country of bird.paises">
+          <span>{{country.nombre}}</span>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let bird">
+        <button mat-button color="warn" matTooltip="Eliminar" (confirm)="deleteBird(bird.codigo)" [swal]="deleteBirdModal">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-button color="primary" matTooltip="Editar" (click)="editBird(bird.codigo)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator #paginator
+      [length]="dataSource.data.length"
+      [pageIndex]="0"
+      [pageSize]="50"
+      [pageSizeOptions]="[25, 50, 100, 250]">
+  </mat-paginator>
+
+  <swal #deleteBirdModal
+    title="Eliminar ave"
+    text="¿Estás seguro que deseas eliminar el registro?"
+    type="warning"
+    [showCancelButton]="true"
+    [focusCancel]="true">
+  </swal>
+</div>

@@ -1,0 +1,60 @@
+<div class="dialog-title">
+  <h2>{{data.bird ? 'Editar ave' : 'Agregar ave'}}</h2>
+</div>
+<mat-divider></mat-divider>
+<br>
+<div class="form-container">
+  <form [formGroup]="birdForm" (ngSubmit)="onSubmit()">
+    <mat-grid-list cols="2" rowHeight="70px">
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput type="text" formControlName="codigo" placeholder="Código" maxlength="5">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput type="text" formControlName="nombreComun" placeholder="Nombre común" maxlength="100">
+        </mat-form-field>
+      </mat-grid-tile>      
+    </mat-grid-list>  
+    
+    <mat-grid-list cols="2" rowHeight="70px">
+      <mat-grid-tile>
+        <mat-form-field>
+          <input matInput type="text" formControlName="nombreCientifico" placeholder="Nombre científico" maxlength="200">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>      
+          <mat-select placeholder="Zona" formControlName="codigoZona" (selectionChange)="onZoneSelected($event)">
+            <mat-option *ngFor="let zone of data.zones$ | async as zones" [value]="zone">{{zone.nombre}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>    
+    
+    <mat-grid-list cols="1" rowHeight="100px" *ngIf="countries.length">
+      <mat-grid-tile>  
+        <div>
+          <h4>Paises</h4>        
+        </div>      
+        <br>
+        <ng-container *ngFor="let country of countries">
+          <div class="margin-10">
+            <mat-checkbox (change)="onContrySelected(country)" [checked]="country.selected">{{country.nombre}}</mat-checkbox>
+          </div>
+        </ng-container>
+      </mat-grid-tile>
+    </mat-grid-list>
+        
+    <br>
+    <mat-divider></mat-divider>
+    <br>
+    <button mat-flat-button color="primary" type="submit" class="float-right margin-5">
+      <mat-icon>check</mat-icon>Guardar
+    </button>
+    <button mat-stroked-button color="primary" class="float-right margin-5" (click)="cancel()">
+      <mat-icon>close</mat-icon>Cancelar
+    </button>
+  </form>
+</div>
